@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Header } from "@/components/layout/Header";
+import { Hero } from "@/components/ui/animated-hero";
 import { Clock, Shield, Zap, Users, CheckCircle } from "lucide-react";
 import heroBackground from "@/assets/hero-background.jpg";
 
@@ -68,42 +69,18 @@ const Home = () => {
       <Header />
       
       {/* Hero Section */}
-      <section className="relative py-20 lg:py-32 overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-5"
-          style={{ backgroundImage: `url(${heroBackground})` }}
-        />
-        <div className="absolute inset-0 bg-gradient-subtle" />
-        
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-              Partner Deal Registration
-              <span className="block text-muted-foreground">Made Simple</span>
-            </h1>
-            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
-              Streamline your deal registration process with our intelligent system. 
-              Register deals in under 3 minutes with real-time duplicate detection and automated approval routing.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Button variant="hero" size="xl" asChild>
-                <a href="/register">Register New Deal</a>
-              </Button>
-              <Button variant="outline" size="xl" asChild>
-                <a href="/dashboard">View Dashboard</a>
-              </Button>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-3xl mx-auto">
-              {stats.map((stat, index) => (
-                <div key={index} className="text-center">
-                  <div className="text-3xl font-bold text-foreground mb-1">{stat.value}</div>
-                  <div className="text-sm text-muted-foreground">{stat.label}</div>
-                </div>
-              ))}
-            </div>
+      <Hero />
+      
+      {/* Stats Section */}
+      <section className="py-16 bg-muted/30">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-4xl mx-auto">
+            {stats.map((stat, index) => (
+              <div key={index} className="text-center">
+                <div className="text-3xl font-bold text-foreground mb-1">{stat.value}</div>
+                <div className="text-sm text-muted-foreground">{stat.label}</div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
