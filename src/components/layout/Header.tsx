@@ -1,5 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+
+const navigationItems = [
+  { href: "/", label: "Home" },
+  { href: "/dashboard", label: "Dashboard" },
+  { href: "/deals", label: "Deal Tracker" },
+  { href: "/support", label: "Support" }
+];
 
 export const Header = () => {
   const location = useLocation();
@@ -12,7 +21,7 @@ export const Header = () => {
           {/* Logo */}
           <div className="flex items-center space-x-4">
             <div className="flex-shrink-0">
-              <span className="text-xl font-bold text-foreground">Daxa.ai</span>
+              <span className="text-xl font-bold text-foreground">Daxa</span>
               <span className="text-sm text-muted-foreground ml-2 hidden sm:inline">
                 Partner Portal
               </span>
@@ -20,19 +29,36 @@ export const Header = () => {
           </div>
 
           {/* Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <a href="/" className="text-foreground hover:text-muted-foreground transition-colors">
-              Home
-            </a>
-            <a href="/dashboard" className="text-foreground hover:text-muted-foreground transition-colors">
-              Dashboard
-            </a>
-            <a href="/deals" className="text-foreground hover:text-muted-foreground transition-colors">
-              Deal Tracker
-            </a>
-            <a href="/support" className="text-foreground hover:text-muted-foreground transition-colors">
-              Support
-            </a>
+          <nav className="hidden md:flex items-center relative">
+            <div className="flex items-center space-x-8 relative">
+              {navigationItems.map((item) => (
+                <Link
+                  key={item.href}
+                  to={item.href}
+                  className="relative px-3 py-2 text-foreground hover:text-primary transition-colors duration-300 z-10"
+                >
+                  {location.pathname === item.href && (
+                    <motion.div
+                      layoutId="lamp"
+                      className="absolute inset-0 bg-gradient-to-r from-primary/20 via-primary/30 to-primary/20 rounded-lg"
+                      style={{
+                        boxShadow: `
+                          0 0 20px hsl(var(--primary) / 0.3),
+                          0 0 40px hsl(var(--primary) / 0.2),
+                          0 0 60px hsl(var(--primary) / 0.1)
+                        `
+                      }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 380,
+                        damping: 30
+                      }}
+                    />
+                  )}
+                  <span className="relative z-10">{item.label}</span>
+                </Link>
+              ))}
+            </div>
           </nav>
 
           {/* Auth Actions */}

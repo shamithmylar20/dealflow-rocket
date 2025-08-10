@@ -2,8 +2,10 @@ import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { MoveRight, PhoneCall } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 function Hero() {
+  const navigate = useNavigate();
   const [titleNumber, setTitleNumber] = useState(0);
   const titles = useMemo(
     () => ["streamlined", "secure", "efficient", "intelligent", "fast"],
@@ -69,7 +71,7 @@ function Hero() {
             <Button size="lg" className="gap-4" variant="outline">
               Schedule Demo <PhoneCall className="w-4 h-4" />
             </Button>
-            <Button size="lg" className="gap-4">
+            <Button size="lg" className="gap-4" onClick={() => navigate("/register")}>
               Register Deal <MoveRight className="w-4 h-4" />
             </Button>
           </div>

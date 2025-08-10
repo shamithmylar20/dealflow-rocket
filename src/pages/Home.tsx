@@ -59,7 +59,7 @@ const steps = [
 const stats = [
   { value: "3 min", label: "Average Registration Time" },
   { value: "98%", label: "Partner Adoption Rate" },
-  { value: "24 hrs", label: "Average Approval Time" },
+  { value: "48 hrs", label: "Average Approval Time" },
   { value: "95%", label: "Duplicate Prevention Rate" }
 ];
 
@@ -164,7 +164,7 @@ const Home = () => {
             <Button variant="secondary" size="xl" asChild>
               <a href="/register">Start Registration</a>
             </Button>
-            <Button variant="outline" size="xl" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary" asChild>
+            <Button variant="outline" size="xl" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary bg-transparent" asChild>
               <a href="/auth">Partner Login</a>
             </Button>
           </div>
@@ -176,7 +176,7 @@ const Home = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-4 md:mb-0">
-              <span className="text-xl font-bold text-foreground">Daxa.ai</span>
+              <span className="text-xl font-bold text-foreground">Daxa</span>
               <span className="text-muted-foreground ml-2">Partner Portal</span>
             </div>
             <div className="flex space-x-6 text-sm text-muted-foreground">
