@@ -15,17 +15,33 @@ const Auth = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+    
     setIsLoading(true);
     
-    // Simulate login
-    setTimeout(() => {
+    // Accept any valid email format + any password
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (emailRegex.test(email) && password.length > 0) {
+      setTimeout(() => {
+        setIsLoading(false);
+        // Mock session storage
+        localStorage.setItem('auth-session', JSON.stringify({ email, timestamp: Date.now() }));
+        toast({
+          title: "Login Successful",
+          description: "Welcome back to the Partner Portal!",
+        });
+        window.location.href = "/dashboard";
+      }, 1200);
+    } else {
       setIsLoading(false);
       toast({
-        title: "Login Successful",
-        description: "Welcome back to the Partner Portal!",
+        title: "Login Failed",
+        description: "Please enter a valid email and password.",
+        variant: "destructive"
       });
-      window.location.href = "/dashboard";
-    }, 1500);
+    }
   };
 
   const handleRegister = async (e: React.FormEvent) => {
@@ -86,6 +102,7 @@ const Auth = () => {
                       <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                       <Input
                         id="email"
+                        name="email"
                         type="email"
                         placeholder="partner@company.com"
                         className="pl-10"
@@ -100,6 +117,7 @@ const Auth = () => {
                       <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                       <Input
                         id="password"
+                        name="password"
                         type={showPassword ? "text" : "password"}
                         placeholder="Enter your password"
                         className="pl-10 pr-10"

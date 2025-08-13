@@ -43,7 +43,7 @@ Black and White theme with accessibility focus
     /* Form Elements */
     --border: 0 0% 90%;
     --input: 0 0% 100%;
-    --input-border: 0 0% 85%;
+    --input-border: 0 0% 50%;
     --ring: 0 0% 0%;
 
     /* Component Radius */

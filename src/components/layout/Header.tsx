@@ -74,10 +74,18 @@ export const Header = () => {
               </>
             ) : (
               <>
-                <Button variant="ghost" size="sm">
-                  Profile
+                <Button variant="ghost" size="sm" asChild>
+                  <Link to="/profile">Profile</Link>
                 </Button>
-                <Button variant="outline" size="sm">
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => {
+                    // Mock sign out - clear any stored data and redirect
+                    localStorage.removeItem('auth-session');
+                    window.location.href = '/auth';
+                  }}
+                >
                   Sign Out
                 </Button>
               </>
