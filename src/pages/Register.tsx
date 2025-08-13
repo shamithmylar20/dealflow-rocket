@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, ArrowRight, Save, Send } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { useFormValidation, getSubmissionPayload, ValidationRule } from "@/hooks/useFormValidation";
 
 // Import step components
 import { QuickCheckStep } from "@/components/registration/QuickCheckStep";
@@ -51,6 +53,24 @@ const Register = () => {
   const [formData, setFormData] = useState({});
   const [isAutoSaving, setIsAutoSaving] = useState(false);
 
+  // Validation rules for all required fields
+  const validationRules: ValidationRule[] = [
+    { field: 'companyName', required: true, minLength: 2 },
+    { field: 'domain', required: true, pattern: /^[a-z0-9.-]+\.[a-z]{2,}$/ },
+    { field: 'partnerCompany', required: true },
+    { field: 'submitterName', required: true, minLength: 2, maxLength: 50 },
+    { field: 'submitterEmail', required: true, email: true },
+    { field: 'territory', required: true },
+    { field: 'customerIndustry', required: true },
+    { field: 'customerLocation', required: true },
+    { field: 'dealStage', required: true },
+    { field: 'expectedCloseDate', required: true, futureDate: true },
+    { field: 'dealValue', required: true, positiveNumber: true },
+    { field: 'contractType', required: true }
+  ];
+
+  const { errors, isValid } = useFormValidation(formData, validationRules);
+
   const currentStepIndex = steps.findIndex(step => step.id === currentStepId);
   const isFirstStep = currentStepIndex === 0;
   const isLastStep = currentStepIndex === steps.length - 1;
@@ -86,11 +106,33 @@ const Register = () => {
   };
 
   const handleSubmit = async () => {
-    // Handle final submission
-    toast({
-      title: "Deal submitted successfully!",
-      description: "Your deal registration has been submitted for review.",
-    });
+    if (!isValid) {
+      toast({
+        title: "Validation Error",
+        description: "Please fix all validation errors before submitting.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Get sanitized payload with only allowed fields
+    const payload = getSubmissionPayload(formData);
+    
+    try {
+      // Handle final submission with clean payload
+      console.log('Submitting deal registration:', payload);
+      
+      toast({
+        title: "Deal submitted successfully!",
+        description: "Your deal registration has been submitted for review.",
+      });
+    } catch (error) {
+      toast({
+        title: "Submission Error",
+        description: "There was an error submitting your deal. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
   const renderCurrentStep = () => {
@@ -111,12 +153,13 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="max-w-4xl mx-auto">
-          {/* Header */}
+    <TooltipProvider>
+      <div className="min-h-screen bg-background">
+        <Header />
+        
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="max-w-4xl mx-auto">
+            {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-foreground mb-2">
               Register New Deal
@@ -187,7 +230,11 @@ const Register = () => {
                       <ArrowRight className="w-4 h-4 ml-2" />
                     </Button>
                   ) : (
-                    <Button variant="hero" onClick={handleSubmit}>
+                    <Button 
+                      variant="hero" 
+                      onClick={handleSubmit}
+                      disabled={!isValid}
+                    >
                       <Send className="w-4 h-4 mr-2" />
                       Submit Deal
                     </Button>
@@ -204,9 +251,10 @@ const Register = () => {
               Support Center
             </a>
           </div>
+          </div>
         </div>
       </div>
-    </div>
+    </TooltipProvider>
   );
 };
 

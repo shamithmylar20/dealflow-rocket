@@ -41,9 +41,8 @@ export const ReviewStep = ({ formData, setFormData }: ReviewStepProps) => {
 
   const getEstimatedApprovalTime = () => {
     const dealValue = parseFloat(formData.dealValue?.replace(/[^0-9.]/g, '') || '0');
-    const hasCompliance = formData.complianceRequirements?.length > 0;
     
-    if (dealValue > 500000 || hasCompliance) {
+    if (dealValue > 500000) {
       return "24-48 hours (Manual review required)";
     } else if (dealValue > 100000) {
       return "4-24 hours (Standard review)";
@@ -54,11 +53,10 @@ export const ReviewStep = ({ formData, setFormData }: ReviewStepProps) => {
 
   const getApprovalRoute = () => {
     const dealValue = parseFloat(formData.dealValue?.replace(/[^0-9.]/g, '') || '0');
-    const hasCompliance = formData.complianceRequirements?.length > 0;
     
     if (dealValue > 500000) {
       return "Enterprise Sales Director + Regional VP";
-    } else if (dealValue > 100000 || hasCompliance) {
+    } else if (dealValue > 100000) {
       return "Regional Sales Manager + Partner Manager";
     } else {
       return "Auto-approval with Partner Manager notification";
@@ -97,11 +95,15 @@ export const ReviewStep = ({ formData, setFormData }: ReviewStepProps) => {
             </div>
             <div>
               <p className="text-sm font-medium text-muted-foreground">Legal Entity Name</p>
-              <p className="text-foreground">{formData.customerLegalName || 'Not specified'}</p>
+              <p className="text-foreground">{formData.customerLegalName || 'Same as company name'}</p>
             </div>
             <div>
               <p className="text-sm font-medium text-muted-foreground">Industry</p>
               <p className="text-foreground">{formData.customerIndustry || 'Not specified'}</p>
+            </div>
+            <div>
+              <p className="text-sm font-medium text-muted-foreground">Headquarters Location</p>
+              <p className="text-foreground">{formData.customerLocation || 'Not specified'}</p>
             </div>
           </div>
           
@@ -130,15 +132,15 @@ export const ReviewStep = ({ formData, setFormData }: ReviewStepProps) => {
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <p className="text-sm font-medium text-muted-foreground">Partner Company</p>
-              <p className="text-foreground">{formData.company || 'Not specified'}</p>
-            </div>
-            <div>
-              <p className="text-sm font-medium text-muted-foreground">Partner Type</p>
-              <p className="text-foreground">{formData.partnerType || 'Not specified'}</p>
+              <p className="text-foreground">{formData.partnerCompany || 'Not specified'}</p>
             </div>
             <div>
               <p className="text-sm font-medium text-muted-foreground">Submitter</p>
               <p className="text-foreground">{formData.submitterName || 'Not specified'}</p>
+            </div>
+            <div>
+              <p className="text-sm font-medium text-muted-foreground">Submitter Email</p>
+              <p className="text-foreground">{formData.submitterEmail || 'Not specified'}</p>
             </div>
             <div>
               <p className="text-sm font-medium text-muted-foreground">Territory</p>
@@ -168,8 +170,8 @@ export const ReviewStep = ({ formData, setFormData }: ReviewStepProps) => {
               <p className="text-foreground">{formatDate(formData.expectedCloseDate)}</p>
             </div>
             <div>
-              <p className="text-sm font-medium text-muted-foreground">Probability</p>
-              <p className="text-foreground">{formData.probability?.[0] || 0}%</p>
+              <p className="text-sm font-medium text-muted-foreground">Deal Stage</p>
+              <p className="text-foreground">{formData.dealStage || 'Not specified'}</p>
             </div>
           </div>
 
@@ -177,33 +179,16 @@ export const ReviewStep = ({ formData, setFormData }: ReviewStepProps) => {
 
           <div className="space-y-3">
             <div>
-              <p className="text-sm font-medium text-muted-foreground mb-2">Selected Products</p>
-              <div className="flex flex-wrap gap-2">
-                {formData.mcpServer && <Badge>MCP Server</Badge>}
-                {formData.safeRag && <Badge>Safe RAG</Badge>}
-                {formData.proximaAi && <Badge>Proxima AI</Badge>}
-                {formData.pebbloModules && <Badge>Pebblo Modules</Badge>}
-                {formData.professionalServices && <Badge>Professional Services</Badge>}
-                {!formData.mcpServer && !formData.safeRag && !formData.proximaAi && !formData.pebbloModules && (
-                  <span className="text-muted-foreground">None selected</span>
-                )}
+              <p className="text-sm font-medium text-muted-foreground">Contract Type</p>
+              <p className="text-foreground">{formData.contractType || 'Not specified'}</p>
+            </div>
+
+            {formData.primaryProduct && (
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">Primary Product</p>
+                <p className="text-foreground">{formData.primaryProduct}</p>
               </div>
-            </div>
-
-            <div>
-              <p className="text-sm font-medium text-muted-foreground">Primary Use Case</p>
-              <p className="text-foreground">{formData.primaryUseCase || 'Not specified'}</p>
-            </div>
-
-            <div>
-              <p className="text-sm font-medium text-muted-foreground">Technical Environment</p>
-              <p className="text-foreground">{formatArray(formData.technicalEnvironment)}</p>
-            </div>
-
-            <div>
-              <p className="text-sm font-medium text-muted-foreground">Compliance Requirements</p>
-              <p className="text-foreground">{formatArray(formData.complianceRequirements)}</p>
-            </div>
+            )}
           </div>
         </CardContent>
       </Card>

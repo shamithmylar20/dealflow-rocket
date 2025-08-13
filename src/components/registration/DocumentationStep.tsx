@@ -216,10 +216,10 @@ export const DocumentationStep = ({ formData, setFormData }: DocumentationStepPr
           <CardTitle className="text-base">Additional Notes</CardTitle>
         </CardHeader>
         <CardContent>
-          <FormField
-            label="Additional Context"
-            tooltip="Any additional information that might be helpful for deal review"
-            helpText="Optional - Maximum 2000 characters"
+        <FormField
+          label="Additional Context"
+          tooltip="Optional. Add RFPs, diagrams, or email threads any time after submission."
+          helpText="Optional - Maximum 2000 characters"
           >
             <Textarea
               value={additionalNotes}

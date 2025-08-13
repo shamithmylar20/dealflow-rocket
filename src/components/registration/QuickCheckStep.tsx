@@ -49,12 +49,12 @@ export const QuickCheckStep = ({ formData, setFormData }: QuickCheckStepProps) =
   useEffect(() => {
     const errors: Record<string, string> = {};
     
-    if (companyName && companyName.length < 3) {
-      errors.companyName = "Company name must be at least 3 characters";
+    if (companyName && companyName.length < 2) {
+      errors.companyName = "Company name must be at least 2 characters";
     }
     
-    if (domain && !domain.match(/^[a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z0-9]?\.([a-zA-Z]{2,}\.?)+$/)) {
-      errors.domain = "Please enter a valid domain (e.g., company.com)";
+    if (domain && !domain.match(/^[a-z0-9.-]+\.[a-z]{2,}$/)) {
+      errors.domain = "Enter a valid domain like example.com";
     }
 
     setValidationErrors(errors);
@@ -87,7 +87,7 @@ export const QuickCheckStep = ({ formData, setFormData }: QuickCheckStepProps) =
           label="Customer Company Name"
           required
           error={validationErrors.companyName}
-          tooltip="Enter the legal name of the customer company"
+          tooltip="The end client's public-facing name. Used for duplicate checks."
           helpText="This will be used to check for duplicate registrations"
         >
           <div className="relative">
@@ -111,7 +111,7 @@ export const QuickCheckStep = ({ formData, setFormData }: QuickCheckStepProps) =
           label="Customer Domain"
           required
           error={validationErrors.domain}
-          tooltip="The primary domain of the customer company"
+          tooltip="Client's primary domain (e.g., example.com) for CRM match & dedupe."
           helpText="Used for duplicate detection and company verification"
         >
           <div className="relative">
