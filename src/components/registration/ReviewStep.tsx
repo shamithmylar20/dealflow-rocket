@@ -13,7 +13,13 @@ interface ReviewStepProps {
 }
 
 export const ReviewStep = ({ formData, setFormData }: ReviewStepProps) => {
-  const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [agreedToTerms, setAgreedToTerms] = useState(formData.agreedToTerms || false);
+
+  // Update form data when terms agreement changes
+  const handleTermsChange = (checked: boolean) => {
+    setAgreedToTerms(checked);
+    setFormData({ ...formData, agreedToTerms: checked });
+  };
 
   const formatCurrency = (value: string | number) => {
     const num = typeof value === 'string' ? parseFloat(value.replace(/[^0-9.]/g, '')) : value;
@@ -242,7 +248,7 @@ export const ReviewStep = ({ formData, setFormData }: ReviewStepProps) => {
               <Checkbox
                 id="terms"
                 checked={agreedToTerms}
-                onCheckedChange={(checked) => setAgreedToTerms(checked as boolean)}
+                onCheckedChange={(checked) => handleTermsChange(checked as boolean)}
               />
               <div className="space-y-1">
                 <label

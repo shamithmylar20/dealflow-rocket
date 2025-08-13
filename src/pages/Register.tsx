@@ -66,7 +66,8 @@ const Register = () => {
     { field: 'dealStage', required: true },
     { field: 'expectedCloseDate', required: true, futureDate: true },
     { field: 'dealValue', required: true, positiveNumber: true },
-    { field: 'contractType', required: true }
+    { field: 'contractType', required: true },
+    { field: 'agreedToTerms', required: true }
   ];
 
   const { errors, isValid } = useFormValidation(formData, validationRules);
