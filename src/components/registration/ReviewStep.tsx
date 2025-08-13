@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Edit, FileText, CheckCircle, AlertTriangle } from "lucide-react";
+import { FileText, CheckCircle, AlertTriangle } from "lucide-react";
 
 interface ReviewStepProps {
   formData: any;
@@ -76,12 +76,8 @@ export const ReviewStep = ({ formData, setFormData }: ReviewStepProps) => {
 
       {/* Quick Check Summary */}
       <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
+        <CardHeader>
           <CardTitle className="text-lg">Customer Information</CardTitle>
-          <Button variant="ghost" size="sm">
-            <Edit className="w-4 h-4 mr-2" />
-            Edit
-          </Button>
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="grid md:grid-cols-2 gap-4">
@@ -121,12 +117,8 @@ export const ReviewStep = ({ formData, setFormData }: ReviewStepProps) => {
 
       {/* Partner Information */}
       <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
+        <CardHeader>
           <CardTitle className="text-lg">Partner Information</CardTitle>
-          <Button variant="ghost" size="sm">
-            <Edit className="w-4 h-4 mr-2" />
-            Edit
-          </Button>
         </CardHeader>
         <CardContent>
           <div className="grid md:grid-cols-2 gap-4">
@@ -152,12 +144,8 @@ export const ReviewStep = ({ formData, setFormData }: ReviewStepProps) => {
 
       {/* Deal Intelligence */}
       <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
+        <CardHeader>
           <CardTitle className="text-lg">Deal Intelligence</CardTitle>
-          <Button variant="ghost" size="sm">
-            <Edit className="w-4 h-4 mr-2" />
-            Edit
-          </Button>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid md:grid-cols-3 gap-4">
@@ -196,12 +184,8 @@ export const ReviewStep = ({ formData, setFormData }: ReviewStepProps) => {
       {/* Documentation */}
       {(formData.uploadedFiles?.length > 0 || formData.additionalNotes) && (
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
+          <CardHeader>
             <CardTitle className="text-lg">Documentation</CardTitle>
-            <Button variant="ghost" size="sm">
-              <Edit className="w-4 h-4 mr-2" />
-              Edit
-            </Button>
           </CardHeader>
           <CardContent className="space-y-3">
             {formData.uploadedFiles?.length > 0 && (
