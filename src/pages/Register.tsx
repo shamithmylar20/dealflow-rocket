@@ -107,7 +107,13 @@ const Register = () => {
   };
 
   const handleSubmit = async () => {
+    console.log('Submit button clicked');
+    console.log('Form data:', formData);
+    console.log('Validation errors:', errors);
+    console.log('Is valid:', isValid);
+    
     if (!isValid) {
+      console.log('Form is not valid, showing error toast');
       toast({
         title: "Validation Error",
         description: "Please fix all validation errors before submitting.",
@@ -128,6 +134,7 @@ const Register = () => {
         description: "Your deal registration has been submitted for review.",
       });
     } catch (error) {
+      console.log('Submission error:', error);
       toast({
         title: "Submission Error",
         description: "There was an error submitting your deal. Please try again.",
@@ -237,7 +244,7 @@ const Register = () => {
                       disabled={!isValid}
                     >
                       <Send className="w-4 h-4 mr-2" />
-                      Submit Deal
+                      Submit Deal {!isValid && '(Invalid)'}
                     </Button>
                   )}
                 </div>
