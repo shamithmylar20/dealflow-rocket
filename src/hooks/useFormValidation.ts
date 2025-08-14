@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
 export interface ValidationRule {
   field: string;
@@ -15,10 +15,13 @@ export interface ValidationRule {
 export const useFormValidation = (formData: any, rules: ValidationRule[]) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   
+  // Memoize the rules to prevent infinite re-renders
+  const memoizedRules = useMemo(() => rules, [JSON.stringify(rules)]);
+  
   useEffect(() => {
     const newErrors: Record<string, string> = {};
     
-    rules.forEach(rule => {
+    memoizedRules.forEach(rule => {
       const value = formData[rule.field];
       
       // Required validation
@@ -90,7 +93,7 @@ export const useFormValidation = (formData: any, rules: ValidationRule[]) => {
     });
     
     setErrors(newErrors);
-  }, [formData, rules]);
+  }, [formData, memoizedRules]);
   
   const isValid = Object.keys(errors).length === 0;
   
